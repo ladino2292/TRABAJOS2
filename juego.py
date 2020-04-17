@@ -14,12 +14,12 @@ class Jugador(pygame.sprite.Sprite):
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface([50, 50])
-        self.image.fill(BLANCO)
+        self.image.fill(AMARILLO)
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = (ALTO - self.rect.height) - 10
         self.velx = 0
-        # self.vely=0
+        self.vely=0
 
     def RetPos(self):
         x = self.rect.x
@@ -28,7 +28,7 @@ class Jugador(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.x += self.velx
-        # self.rect.y+=self.vely
+        self.rect.y+=self.vely
 
 
 class Rival(pygame.sprite.Sprite):
@@ -43,8 +43,8 @@ class Rival(pygame.sprite.Sprite):
         self.vely = 0
 
     def update(self):
-        # self.rect.x+=self.velx
-        # self.rect.y+=self.vely
+        #self.rect.x+=self.velx
+        #self.rect.y+=self.vely
         pass
 
 
@@ -90,16 +90,16 @@ if __name__ == '__main__':
             if event.type == pygame.QUIT:
                 fin = True
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_d:
                     j.velx = 5
                     j.vely = 0
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_a:
                     j.velx = -5
                     j.vely = 0
-                if event.key == pygame.K_UP:
+                if event.key == pygame.K_w:
                     j.vely = -5
                     j.velx = 0
-                if event.key == pygame.K_DOWN:
+                if event.key == pygame.K_s:
                     j.vely = 5
                     j.velx = 0
             if event.type == pygame.MOUSEBUTTONDOWN:
