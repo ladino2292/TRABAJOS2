@@ -13,8 +13,7 @@ BLANCO = [255, 255, 255]
 class Jugador(pygame.sprite.Sprite):
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface([50, 50])
-        self.image.fill(ROJO)
+        self.image=pygame.image.load('player.png')
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = (ALTO - self.rect.height) - 10
@@ -28,14 +27,13 @@ class Jugador(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.x += self.velx
-        self.rect.y+=self.vely
+        self.rect.y +=self.vely
 
 
 class Rival(pygame.sprite.Sprite):
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface([50, 50])
-        self.image.fill(VERDE)
+        self.image=pygame.image.load('NAVE.png')
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
@@ -43,16 +41,15 @@ class Rival(pygame.sprite.Sprite):
         self.vely = 0
 
     def update(self):
-        #self.rect.x+=self.velx
-        #self.rect.y+=self.vely
+        # self.rect.x+=self.velx
+        # self.rect.y+=self.vely
         pass
 
 
 class Bala(pygame.sprite.Sprite):
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface([20, 30])
-        self.image.fill(BLANCO)
+        self.image=pygame.image.load('misil1.png')
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
@@ -82,6 +79,7 @@ if __name__ == '__main__':
         r.velx = vx
         rivales.add(r)
 
+    puntos=0
     reloj = pygame.time.Clock()
     fin = False
     while not fin:
@@ -114,6 +112,10 @@ if __name__ == '__main__':
         if j.rect.x > ANCHO:
             j.rect.x = 0 - j.rect.width
         # Colision
+        ls_col = pygame.sprite.spritecollide(j, rivales, True)
+        for e in ls_col:
+            puntos += 1
+        print(puntos)
 
         # Limpieza de memoria
         for b in balas:
