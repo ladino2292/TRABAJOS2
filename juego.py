@@ -119,6 +119,7 @@ if __name__ == '__main__':
 
         # Limpieza de memoria
         for b in balas:
+            ls_r = pygame.sprite.spritecollide(b, rivales, True)
             if b.rect.y < -50:
                 balas.remove(b)
         # Refresco
