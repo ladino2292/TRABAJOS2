@@ -19,6 +19,7 @@ class Jugador(pygame.sprite.Sprite):
         self.rect.y = (ALTO - self.rect.height) - 10
         self.velx = 0
         self.vely=0
+        self.vida=0
 
     def RetPos(self):
         x = self.rect.x
@@ -109,6 +110,7 @@ if __name__ == '__main__':
     puntos=0
     reloj = pygame.time.Clock()
     fin = False
+    fin_juego=False
     while not fin:
         # Gestion eventos
         for event in pygame.event.get():
@@ -142,8 +144,8 @@ if __name__ == '__main__':
         ls_col = pygame.sprite.spritecollide(j, rivales, True)
         for e in ls_col:
             puntos += 1
-            if puntos>3:
-                fin=True
+            '''if puntos>3:
+                fin=True'''
         print(puntos)
 
         # control rivales
@@ -165,18 +167,34 @@ if __name__ == '__main__':
             for r in ls_r:
                 balas.remove(b)
 
+
         for b in balas_r:
+            ls_j=pygame.sprite.spritecollide(b,jugadores,False)
             if b.rect.y>ALTO:
                 balas_r.remove(b)
+            for j in ls_j:
+                j.vida-=1
+
+        for j in jugadores:
+            if j.vida<0:
+                fin_juego=False
+
         # Refresco
-        jugadores.update()
-        rivales.update()
-        balas.update()
-        balas_r.update()
-        ventana.fill(NEGRO)
-        jugadores.draw(ventana)
-        rivales.draw(ventana)
-        balas_r.draw(ventana)
-        balas.draw(ventana)
-        pygame.display.flip()
-        reloj.tick(40)
+        if not fin_juego:
+            jugadores.update()
+            rivales.update()
+            balas.update()
+            balas_r.update()
+            ventana.fill(NEGRO)
+            jugadores.draw(ventana)
+            rivales.draw(ventana)
+            balas_r.draw(ventana)
+            balas.draw(ventana)
+            pygame.display.flip()
+            reloj.tick(40)
+        else:
+            fuente=pygame.front.FRONT(None,32)
+            msj=fuente.render('HAS MUERTO',True,ROJO)
+            ventana.fill(NEGRO)
+            ventana.blit(msj,[450,300])
+            pygame.display.flip()
